@@ -6,51 +6,61 @@ struct AchievementsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: AppSpacing.lg) {
                     if let data = viewModel.sobrietyData {
-                        // Progress Summary
+                        // Progress Summary with Animated Ring
                         let unlocked = viewModel.getUnlockedAchievements()
                         let total = Achievement.achievements.count
+                        let progress = Double(unlocked.count) / Double(total)
 
-                        VStack(spacing: 12) {
-                            Text("Разблокировано")
-                                .font(.headline)
+                        VStack(spacing: AppSpacing.sm) {
+                            Text(NSLocalizedString("achievements.unlocked", comment: ""))
+                                .font(AppTypography.labelLarge)
 
                             ZStack {
-                                Circle()
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 12)
-                                    .frame(width: 120, height: 120)
+                                AnimatedProgressRing(
+                                    progress: progress,
+                                    lineWidth: 12,
+                                    color: AppColor.Badge.gold,
+                                    size: AppDesignTokens.FrameSize.progressCircle
+                                )
 
-                                Circle()
-                                    .trim(from: 0, to: CGFloat(unlocked.count) / CGFloat(total))
-                                    .stroke(Color.yellow, style: StrokeStyle(lineWidth: 12, lineCap: .round))
-                                    .frame(width: 120, height: 120)
-                                    .rotationEffect(.degrees(-90))
+                                VStack(spacing: AppSpacing.xxs) {
+                                    AnimatedCounter(
+                                        value: unlocked.count,
+                                        font: AppTypography.counterLarge
+                                    )
+                                    .foregroundColor(AppColor.textPrimary)
 
-                                VStack(spacing: 4) {
-                                    Text("\(unlocked.count)")
-                                        .font(.system(size: 36, weight: .bold))
-                                    Text("из \(total)")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
+                                    Text(String(format: "/ %d", total))
+                                        .font(AppTypography.labelSmall)
+                                        .foregroundColor(AppColor.textSecondary)
                                 }
                             }
                         }
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(16)
+                        .padding(AppSpacing.cardInner)
+                        .background(AppColor.backgroundSecondary)
+                        .cornerRadius(AppDesignTokens.CornerRadius.large)
+                        .shadowMedium()
                         .padding(.horizontal)
 
                         // Unlocked Achievements
                         if !unlocked.isEmpty {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("Разблокированные достижения")
-                                    .font(.headline)
+                            VStack(alignment: .leading, spacing: AppSpacing.sm) {
+                                Text(NSLocalizedString("achievements.unlocked_section", comment: ""))
+                                    .font(AppTypography.labelLarge)
                                     .padding(.horizontal)
 
-                                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                                    ForEach(unlocked) { achievement in
-                                        AchievementCard(achievement: achievement, isUnlocked: true)
+                                LazyVGrid(
+                                    columns: AppDesignTokens.Grid.twoColumns,
+                                    spacing: AppSpacing.md
+                                ) {
+                                    ForEach(Array(unlocked.enumerated()), id: \.element.id) { index, achievement in
+                                        AchievementCard(
+                                            achievement: achievement,
+                                            isUnlocked: true
+                                        )
+                                        .bounce(delay: Double(index) * 0.1)
                                     }
                                 }
                                 .padding(.horizontal)
@@ -60,14 +70,21 @@ struct AchievementsView: View {
                         // Locked Achievements
                         let locked = viewModel.getLockedAchievements()
                         if !locked.isEmpty {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("Заблокированные достижения")
-                                    .font(.headline)
+                            VStack(alignment: .leading, spacing: AppSpacing.sm) {
+                                Text(NSLocalizedString("achievements.locked_section", comment: ""))
+                                    .font(AppTypography.labelLarge)
                                     .padding(.horizontal)
 
-                                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                                LazyVGrid(
+                                    columns: AppDesignTokens.Grid.twoColumns,
+                                    spacing: AppSpacing.md
+                                ) {
                                     ForEach(locked) { achievement in
-                                        AchievementCard(achievement: achievement, isUnlocked: false, daysSober: data.daysSober)
+                                        AchievementCard(
+                                            achievement: achievement,
+                                            isUnlocked: false,
+                                            daysSober: data.daysSober
+                                        )
                                     }
                                 }
                                 .padding(.horizontal)
@@ -77,7 +94,7 @@ struct AchievementsView: View {
                 }
                 .padding(.vertical)
             }
-            .navigationTitle("Достижения")
+            .navigationTitle(NSLocalizedString("achievements.title", comment: ""))
         }
     }
 }
@@ -88,55 +105,46 @@ struct AchievementCard: View {
     var daysSober: Int = 0
 
     private var color: Color {
-        switch achievement.color {
-        case "blue": return .blue
-        case "green": return .green
-        case "purple": return .purple
-        case "orange": return .orange
-        case "yellow": return .yellow
-        case "red": return .red
-        case "cyan": return .cyan
-        case "pink": return .pink
-        case "gold": return .yellow
-        case "silver": return .gray
-        default: return .gray
-        }
+        AppColor.Badge.color(for: achievement.color)
     }
 
     var body: some View {
-        VStack(spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(isUnlocked ? color.opacity(0.2) : Color.gray.opacity(0.1))
-                    .frame(width: 80, height: 80)
+        VStack(spacing: AppSpacing.sm) {
+            // Animated Badge
+            AnimatedAchievementBadge(
+                icon: achievement.badgeIcon,
+                color: color,
+                isUnlocked: isUnlocked,
+                size: AppDesignTokens.FrameSize.badge
+            )
 
-                Image(systemName: achievement.badgeIcon)
-                    .font(.system(size: 40))
-                    .foregroundColor(isUnlocked ? color : .gray)
-            }
-
-            VStack(spacing: 4) {
+            VStack(spacing: AppSpacing.xxs) {
                 Text(achievement.title)
-                    .font(.subheadline)
+                    .font(AppTypography.labelMedium)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(isUnlocked ? .primary : .secondary)
+                    .foregroundColor(isUnlocked ? AppColor.textPrimary : AppColor.textSecondary)
 
                 if !isUnlocked && daysSober > 0 {
-                    Text("Через \(achievement.daysRequired - daysSober) дней")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    Text(String(format: NSLocalizedString("achievements.days_remaining", comment: ""), achievement.daysRequired - daysSober))
+                        .font(AppTypography.labelSmall)
+                        .foregroundColor(AppColor.textSecondary)
                 }
             }
         }
         .frame(maxWidth: .infinity)
-        .padding()
-        .background(isUnlocked ? color.opacity(0.1) : Color(.systemGray6))
-        .cornerRadius(16)
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(isUnlocked ? color : Color.clear, lineWidth: 2)
+        .padding(AppSpacing.cardInner)
+        .background(
+            isUnlocked ? color.lightBackground : AppColor.backgroundSecondary
         )
-        .opacity(isUnlocked ? 1.0 : 0.6)
+        .cornerRadius(AppDesignTokens.CornerRadius.large)
+        .overlay(
+            RoundedRectangle(cornerRadius: AppDesignTokens.CornerRadius.large)
+                .stroke(
+                    isUnlocked ? color.opacity(0.5) : Color.clear,
+                    lineWidth: AppDesignTokens.BorderWidth.medium
+                )
+        )
+        .opacity(isUnlocked ? AppColor.Opacity.opaque : AppColor.Opacity.disabled)
     }
 }

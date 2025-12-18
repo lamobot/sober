@@ -1,0 +1,175 @@
+/* Common */
+"ok" = "ОК";
+"cancel" = "Отмена";
+"save" = "Сохранить";
+"edit" = "Редактировать";
+"delete" = "Удалить";
+"done" = "Готово";
+
+/* Tabs */
+"tab.main" = "Главная";
+"tab.health" = "Здоровье";
+"tab.mood" = "Настроение";
+"tab.achievements" = "Достижения";
+"tab.settings" = "Настройки";
+
+/* Onboarding */
+"onboarding.title" = "Добро пожаловать в Sober";
+"onboarding.subtitle" = "Начните свой путь к здоровой жизни";
+"onboarding.start_date" = "Дата начала";
+"onboarding.quit_date" = "Дата отказа от алкоголя";
+"onboarding.financial_params" = "Финансовые параметры";
+"onboarding.alcohol_cost" = "Траты на алкоголь в месяц";
+"onboarding.related_cost" = "Сопутствующие траты в месяц";
+"onboarding.related_hint" = "Например: такси, еда, клубы и т.д.";
+"onboarding.time_lost" = "Потерянное время";
+"onboarding.time_lost_placeholder" = "Дни в месяц";
+"onboarding.time_lost_hint" = "Похмелье, восстановление и т.д.";
+"onboarding.start" = "Начать";
+"onboarding.error" = "Ошибка";
+"onboarding.error_message" = "Пожалуйста, заполните все поля корректно";
+
+/* Main Screen */
+"main.sober_since" = "🎯 Ваш путь начался";
+"main.money_saved" = "💰 Деньги вернулись к вам";
+"main.time_saved" = "⏰ Часов жизни возвращено";
+"main.days_streak" = "🔥 Дней в серии";
+"main.projections" = "💎 Ваши будущие накопления";
+"main.projection_6months" = "Полгода";
+"main.projection_12months" = "Целый год";
+"main.next_milestone" = "🎖️ Следующее достижение";
+"main.days_remaining" = "Всего %d дней!";
+
+/* Time Units */
+"time.day" = "день";
+"time.days" = "дней";
+"time.week" = "неделя";
+"time.weeks" = "недель";
+"time.month" = "месяц";
+"time.months" = "месяцев";
+"time.year" = "год";
+"time.years" = "лет";
+
+/* Settings */
+"settings.title" = "Настройки";
+"settings.info" = "Информация";
+"settings.start_date" = "Дата начала";
+"settings.alcohol_cost" = "Траты на алкоголь";
+"settings.related_cost" = "Сопутствующие траты";
+"settings.time_lost" = "Потерянное время";
+"settings.notifications" = "Уведомления";
+"settings.notifications_enable" = "Включить уведомления";
+"settings.notifications_frequency" = "Частота";
+"settings.language" = "Язык";
+"settings.data" = "Данные";
+"settings.reset_data" = "Сбросить все данные";
+"settings.about" = "О приложении";
+"settings.version" = "Версия";
+"settings.support" = "Поддержка";
+"settings.reset_alert" = "Сброс данных";
+"settings.reset_message" = "Вы уверены? Все данные будут удалены безвозвратно.";
+"settings.edit_data" = "Редактировать данные";
+
+/* Notification Frequencies */
+"notification.daily" = "Ежедневно";
+"notification.weekly" = "Еженедельно";
+"notification.monthly" = "Ежемесячно";
+
+/* Health */
+"health.title" = "💪 Восстановление здоровья";
+"health.progress" = "🌟 Ваш путь к здоровью";
+"health.milestones_achieved" = "Покорено вех: %d из %d";
+"health.completed" = "✅ Победы одержаны";
+"health.next" = "🎯 Следующая веха";
+"health.upcoming" = "🔮 Скоро откроется";
+"health.days_remaining" = "Всего %d дней";
+
+/* Health Milestones */
+"health.milestone.day1.title" = "24 часа";
+"health.milestone.day1.description" = "Уровень алкоголя в крови возвращается к нулю. Начинается детоксикация.";
+"health.milestone.day3.title" = "3 дня";
+"health.milestone.day3.description" = "Улучшается качество сна, повышается уровень энергии.";
+"health.milestone.week1.title" = "1 неделя";
+"health.milestone.week1.description" = "Печень начинает восстанавливаться, улучшается состояние кожи.";
+"health.milestone.week2.title" = "2 недели";
+"health.milestone.week2.description" = "Значительное улучшение пищеварения и иммунной системы.";
+"health.milestone.month1.title" = "1 месяц";
+"health.milestone.month1.description" = "Нормализуется кровяное давление, улучшается память и концентрация.";
+"health.milestone.month3.title" = "3 месяца";
+"health.milestone.month3.description" = "Полное восстановление печени (если не было серьезных повреждений).";
+"health.milestone.month6.title" = "6 месяцев";
+"health.milestone.month6.description" = "Значительное улучшение психического здоровья и эмоциональной стабильности.";
+"health.milestone.year1.title" = "1 год";
+"health.milestone.year1.description" = "Снижение риска сердечно-сосудистых заболеваний, полная нормализация функций организма.";
+
+/* Mood */
+"mood.title" = "Настроение";
+"mood.track_title" = "Отслеживайте своё настроение";
+"mood.track_subtitle" = "Начните записывать как вы себя чувствуете каждый день";
+"mood.add_entry" = "Добавить запись";
+"mood.recent_entries" = "Последние записи";
+"mood.statistics" = "Статистика";
+"mood.average" = "Среднее настроение:";
+"mood.total_entries" = "Всего записей:";
+"mood.most_common" = "Частое настроение:";
+"mood.add_title" = "Добавить запись";
+"mood.how_feeling" = "Настроение";
+"mood.notes" = "Заметки (опционально)";
+
+/* Mood Levels */
+"mood.excellent" = "Отлично";
+"mood.good" = "Хорошо";
+"mood.okay" = "Нормально";
+"mood.bad" = "Плохо";
+"mood.terrible" = "Ужасно";
+
+/* Mood Average Descriptions */
+"mood.avg.excellent" = "Отлично 😄";
+"mood.avg.good" = "Хорошо 🙂";
+"mood.avg.okay" = "Нормально 😐";
+"mood.avg.bad" = "Плохо 😟";
+"mood.avg.difficult" = "Тяжело 😢";
+
+/* Achievements */
+"achievements.title" = "🏆 Ваши победы";
+"achievements.unlocked" = "🎉 Заработано наград";
+"achievements.unlocked_section" = "⭐ Зал славы";
+"achievements.locked_section" = "🔒 Будущие достижения";
+"achievements.days_remaining" = "Откроется через %d дней";
+
+/* Achievement Titles and Descriptions */
+"achievement.day1.title" = "Первый день";
+"achievement.day1.description" = "Вы сделали первый шаг к новой жизни!";
+"achievement.day3.title" = "Три дня";
+"achievement.day3.description" = "Самое трудное позади!";
+"achievement.week1.title" = "Первая неделя";
+"achievement.week1.description" = "Целая неделя трезвости!";
+"achievement.week2.title" = "Две недели";
+"achievement.week2.description" = "Вы на правильном пути!";
+"achievement.month1.title" = "Первый месяц";
+"achievement.month1.description" = "Невероятное достижение!";
+"achievement.month2.title" = "Два месяца";
+"achievement.month2.description" = "Ваша сила воли впечатляет!";
+"achievement.month3.title" = "Три месяца";
+"achievement.month3.description" = "Новые привычки укоренились!";
+"achievement.month6.title" = "Полгода";
+"achievement.month6.description" = "Половина года трезвости!";
+"achievement.year1.title" = "Год трезвости";
+"achievement.year1.description" = "Легендарное достижение! Целый год!";
+"achievement.year2.title" = "Два года";
+"achievement.year2.description" = "Вы невероятны!";
+
+/* Currency */
+"currency.eur" = "€";
+"currency.days" = "дней";
+
+
+/* Notifications */
+"notification.title.daily" = "Отличная работа!";
+"notification.body.daily" = "Посмотрите на свой прогресс в Sober";
+"notification.title.weekly" = "Еженедельный отчет";
+"notification.body.weekly" = "Вы уже %d недель трезвы! Продолжайте в том же духе!";
+"notification.title.monthly" = "Месячный отчет";
+"notification.body.monthly" = "Прошел еще один месяц трезвости. Вы сэкономили %.0f€!";
+"notification.milestone.title" = "Новое достижение! 🎉";
+"notification.milestone.body" = "%@: %@";

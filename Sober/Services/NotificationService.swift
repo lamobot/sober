@@ -1,11 +1,13 @@
 import Foundation
 import UserNotifications
 
+/// Service for managing push notifications
 class NotificationService {
     static let shared = NotificationService()
 
     private init() {}
 
+    /// Request notification permissions from user
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             DispatchQueue.main.async {
@@ -14,6 +16,7 @@ class NotificationService {
         }
     }
 
+    /// Schedule recurring notifications based on frequency
     func scheduleNotifications(frequency: Settings.NotificationFrequency, sobrietyData: SobrietyData) {
         cancelAllNotifications()
 
@@ -26,22 +29,22 @@ class NotificationService {
         case .daily:
             dateComponents.hour = 9
             dateComponents.minute = 0
-            content.title = "Отличная работа!"
-            content.body = "Посмотрите на свой прогресс в Sober"
+            content.title = NSLocalizedString("notification.title.daily", comment: "")
+            content.body = NSLocalizedString("notification.body.daily", comment: "")
 
         case .weekly:
             dateComponents.weekday = 2 // Monday
             dateComponents.hour = 9
             dateComponents.minute = 0
-            content.title = "Еженедельный отчет"
-            content.body = "Вы уже \(sobrietyData.weeksSober) недель трезвы! Продолжайте в том же духе!"
+            content.title = NSLocalizedString("notification.title.weekly", comment: "")
+            content.body = String(format: NSLocalizedString("notification.body.weekly", comment: ""), sobrietyData.weeksSober)
 
         case .monthly:
             dateComponents.day = 1
             dateComponents.hour = 9
             dateComponents.minute = 0
-            content.title = "Месячный отчет"
-            content.body = "Прошел еще один месяц трезвости. Вы сэкономили \(String(format: "%.0f", sobrietyData.moneySaved))€!"
+            content.title = NSLocalizedString("notification.title.monthly", comment: "")
+            content.body = String(format: NSLocalizedString("notification.body.monthly", comment: ""), sobrietyData.moneySaved)
         }
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
@@ -54,10 +57,11 @@ class NotificationService {
         }
     }
 
+    /// Schedule notification for reaching a health milestone
     func scheduleMilestoneNotification(milestone: HealthMilestone, date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "Новое достижение! 🎉"
-        content.body = "\(milestone.title): \(milestone.description)"
+        content.title = NSLocalizedString("notification.milestone.title", comment: "")
+        content.body = String(format: NSLocalizedString("notification.milestone.body", comment: ""), milestone.title, milestone.description)
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: date.timeIntervalSinceNow, repeats: false)
@@ -66,6 +70,7 @@ class NotificationService {
         UNUserNotificationCenter.current().add(request)
     }
 
+    /// Cancel all pending notifications
     func cancelAllNotifications() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }

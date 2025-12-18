@@ -6,105 +6,130 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 24) {
+                VStack(spacing: AppSpacing.xl) {
                     if let data = viewModel.sobrietyData {
-                        // Hero Section
-                        VStack(spacing: 12) {
-                            Text("Вы не употребляете алкоголь с")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                        // Hero Section with Gradient
+                        VStack(spacing: AppSpacing.sm) {
+                            Text(NSLocalizedString("main.sober_since", comment: ""))
+                                .font(AppTypography.labelMedium)
+                                .foregroundColor(AppColor.textSecondary)
 
                             Text(data.sobrietyStartDate, style: .date)
-                                .font(.headline)
+                                .font(AppTypography.labelLarge)
 
-                            // Main Counter
-                            VStack(spacing: 4) {
-                                Text("\(data.displayTimeValue)")
-                                    .font(.system(size: 72, weight: .bold, design: .rounded))
-                                    .foregroundColor(.primary)
+                            // Animated Counter
+                            VStack(spacing: AppSpacing.xxs) {
+                                AnimatedCounter(
+                                    value: data.displayTimeValue,
+                                    font: AppTypography.displayLarge
+                                )
+                                .foregroundColor(AppColor.textPrimary)
 
-                                Text(data.displayTimeUnit)
-                                    .font(.title2)
-                                    .foregroundColor(.secondary)
+                                Text(data.displayTimeUnit())
+                                    .font(AppTypography.headlineMedium)
+                                    .foregroundColor(AppColor.textSecondary)
                             }
                             .padding()
                         }
+                        .frame(maxWidth: .infinity)
                         .padding()
+                        .background(
+                            LinearGradient(
+                                colors: [
+                                    AppColor.primary.opacity(0.1),
+                                    AppColor.primary.opacity(0.05)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .cornerRadius(AppDesignTokens.CornerRadius.large)
+                        .padding(.horizontal)
 
-                        // Stats Grid
-                        VStack(spacing: 16) {
+                        // Stats Grid with Animations
+                        VStack(spacing: AppSpacing.md) {
                             StatCard(
-                                title: "Сэкономлено денег",
+                                title: NSLocalizedString("main.money_saved", comment: ""),
                                 value: String(format: "%.0f €", data.moneySaved),
                                 icon: "eurosign.circle.fill",
-                                color: .green
+                                color: AppColor.money
                             )
+                            .slideIn(from: .leading, delay: 0.1)
 
                             StatCard(
-                                title: "Сэкономлено времени",
-                                value: String(format: "%.1f дней", data.timeSaved),
+                                title: NSLocalizedString("main.time_saved", comment: ""),
+                                value: String(format: "%.1f %@", data.timeSaved, NSLocalizedString("currency.days", comment: "")),
                                 icon: "clock.fill",
-                                color: .blue
+                                color: AppColor.time
                             )
+                            .slideIn(from: .leading, delay: 0.2)
 
                             StatCard(
-                                title: "Дней подряд",
+                                title: NSLocalizedString("main.days_streak", comment: ""),
                                 value: "\(data.daysSober)",
                                 icon: "calendar",
-                                color: .orange
+                                color: AppColor.days
                             )
+                            .slideIn(from: .leading, delay: 0.3)
                         }
                         .padding(.horizontal)
 
                         // Projections
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Прогноз экономии")
-                                .font(.headline)
+                        VStack(alignment: .leading, spacing: AppSpacing.sm) {
+                            Text(NSLocalizedString("main.projections", comment: ""))
+                                .font(AppTypography.labelLarge)
                                 .padding(.horizontal)
 
-                            HStack(spacing: 12) {
+                            HStack(spacing: AppSpacing.sm) {
                                 ProjectionCard(
-                                    period: "Через 6 месяцев",
+                                    period: NSLocalizedString("main.projection_6months", comment: ""),
                                     amount: String(format: "%.0f €", data.projectedSavings6Months)
                                 )
 
                                 ProjectionCard(
-                                    period: "Через 12 месяцев",
+                                    period: NSLocalizedString("main.projection_12months", comment: ""),
                                     amount: String(format: "%.0f €", data.projectedSavings12Months)
                                 )
                             }
                             .padding(.horizontal)
                         }
                         .padding(.vertical)
+                        .slideIn(from: .bottom, delay: 0.4)
 
-                        // Next Milestone
+                        // Next Milestone with Pulse
                         if let nextMilestone = viewModel.getNextMilestone() {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Следующая цель")
-                                    .font(.headline)
+                            VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                                Text(NSLocalizedString("main.next_milestone", comment: ""))
+                                    .font(AppTypography.labelLarge)
 
-                                HStack {
+                                HStack(spacing: AppSpacing.md) {
                                     Image(systemName: nextMilestone.icon)
-                                        .font(.title2)
-                                        .foregroundColor(.purple)
+                                        .font(.system(size: AppDesignTokens.IconSize.large))
+                                        .foregroundColor(AppColor.milestone)
+                                        .pulse()
 
-                                    VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: AppSpacing.xxs) {
                                         Text(nextMilestone.title)
-                                            .font(.subheadline)
+                                            .font(AppTypography.labelMedium)
                                             .fontWeight(.semibold)
 
-                                        Text("Осталось \(nextMilestone.daysRequired - data.daysSober) дней")
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
+                                        Text(String(format: NSLocalizedString("main.days_remaining", comment: ""), nextMilestone.daysRequired - data.daysSober))
+                                            .font(AppTypography.labelSmall)
+                                            .foregroundColor(AppColor.textSecondary)
                                     }
 
                                     Spacer()
                                 }
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(12)
+                                .padding(AppSpacing.cardInner)
+                                .background(AppColor.milestone.lightBackground)
+                                .cornerRadius(AppDesignTokens.CornerRadius.medium)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: AppDesignTokens.CornerRadius.medium)
+                                        .stroke(AppColor.milestone.opacity(0.3), lineWidth: 1)
+                                )
                             }
                             .padding(.horizontal)
+                            .slideIn(from: .bottom, delay: 0.5)
                         }
                     }
                 }
@@ -122,27 +147,29 @@ struct StatCard: View {
     let color: Color
 
     var body: some View {
-        HStack {
+        HStack(spacing: AppSpacing.md) {
             Image(systemName: icon)
-                .font(.title)
+                .font(.system(size: AppDesignTokens.IconSize.xlarge))
                 .foregroundColor(color)
-                .frame(width: 50)
+                .frame(width: AppDesignTokens.FrameSize.iconMedium)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: AppSpacing.xxs) {
                 Text(title)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .font(AppTypography.labelMedium)
+                    .foregroundColor(AppColor.textSecondary)
 
                 Text(value)
-                    .font(.title2)
+                    .font(AppTypography.headlineMedium)
                     .fontWeight(.bold)
+                    .foregroundColor(AppColor.textPrimary)
             }
 
             Spacer()
         }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
+        .padding(AppSpacing.cardInner)
+        .background(AppColor.backgroundSecondary)
+        .cornerRadius(AppDesignTokens.CornerRadius.medium)
+        .shadowSmall()
     }
 }
 
@@ -151,18 +178,20 @@ struct ProjectionCard: View {
     let amount: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: AppSpacing.xs) {
             Text(period)
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(AppTypography.labelSmall)
+                .foregroundColor(AppColor.textSecondary)
 
             Text(amount)
-                .font(.title3)
+                .font(AppTypography.headlineSmall)
                 .fontWeight(.bold)
+                .foregroundColor(AppColor.textPrimary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
+        .padding(AppSpacing.cardInner)
+        .background(AppColor.backgroundSecondary)
+        .cornerRadius(AppDesignTokens.CornerRadius.medium)
+        .shadowSmall()
     }
 }

@@ -10,7 +10,7 @@ struct HealthView: View {
                     if let data = viewModel.sobrietyData {
                         // Progress Overview
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("Ваш прогресс")
+                            Text(NSLocalizedString("health.progress", comment: ""))
                                 .font(.headline)
 
                             let achievedCount = viewModel.getAchievedMilestones().count
@@ -19,7 +19,7 @@ struct HealthView: View {
                             ProgressView(value: Double(achievedCount), total: Double(totalCount))
                                 .tint(.green)
 
-                            Text("\(achievedCount) из \(totalCount) этапов достигнуто")
+                            Text(String(format: NSLocalizedString("health.milestones_achieved", comment: ""), achievedCount, totalCount))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
@@ -32,7 +32,7 @@ struct HealthView: View {
                         let achieved = viewModel.getAchievedMilestones()
                         if !achieved.isEmpty {
                             VStack(alignment: .leading, spacing: 12) {
-                                Text("Пройденные этапы")
+                                Text(NSLocalizedString("health.completed", comment: ""))
                                     .font(.headline)
                                     .padding(.horizontal)
 
@@ -46,7 +46,7 @@ struct HealthView: View {
                         // Next Milestone
                         if let nextMilestone = viewModel.getNextMilestone() {
                             VStack(alignment: .leading, spacing: 12) {
-                                Text("Следующий этап")
+                                Text(NSLocalizedString("health.next", comment: ""))
                                     .font(.headline)
                                     .padding(.horizontal)
 
@@ -62,7 +62,7 @@ struct HealthView: View {
 
                         if !upcoming.isEmpty {
                             VStack(alignment: .leading, spacing: 12) {
-                                Text("Предстоящие этапы")
+                                Text(NSLocalizedString("health.upcoming", comment: ""))
                                     .font(.headline)
                                     .padding(.horizontal)
 
@@ -76,7 +76,7 @@ struct HealthView: View {
                 }
                 .padding(.vertical)
             }
-            .navigationTitle("Здоровье")
+            .navigationTitle(NSLocalizedString("health.title", comment: ""))
         }
     }
 }
@@ -104,7 +104,7 @@ struct HealthMilestoneCard: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 if !isAchieved {
-                    Text("Осталось \(milestone.daysRequired - daysSober) дней")
+                    Text(String(format: NSLocalizedString("health.days_remaining", comment: ""), milestone.daysRequired - daysSober))
                         .font(.caption)
                         .foregroundColor(.blue)
                         .padding(.top, 4)

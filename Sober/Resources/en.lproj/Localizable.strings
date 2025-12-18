@@ -1,0 +1,175 @@
+/* Common */
+"ok" = "OK";
+"cancel" = "Cancel";
+"save" = "Save";
+"edit" = "Edit";
+"delete" = "Delete";
+"done" = "Done";
+
+/* Tabs */
+"tab.main" = "Home";
+"tab.health" = "Health";
+"tab.mood" = "Mood";
+"tab.achievements" = "Achievements";
+"tab.settings" = "Settings";
+
+/* Onboarding */
+"onboarding.title" = "Welcome to Sober";
+"onboarding.subtitle" = "Start your journey to a healthier life";
+"onboarding.start_date" = "Start Date";
+"onboarding.quit_date" = "Date you quit alcohol";
+"onboarding.financial_params" = "Financial Parameters";
+"onboarding.alcohol_cost" = "Alcohol expenses per month";
+"onboarding.related_cost" = "Related expenses per month";
+"onboarding.related_hint" = "For example: taxi, food, clubs, etc.";
+"onboarding.time_lost" = "Lost Time";
+"onboarding.time_lost_placeholder" = "Days per month";
+"onboarding.time_lost_hint" = "Hangovers, recovery, etc.";
+"onboarding.start" = "Start";
+"onboarding.error" = "Error";
+"onboarding.error_message" = "Please fill in all fields correctly";
+
+/* Main Screen */
+"main.sober_since" = "🎯 Your journey started";
+"main.money_saved" = "💰 Money Back in Your Pocket";
+"main.time_saved" = "⏰ Life Hours Reclaimed";
+"main.days_streak" = "🔥 Streak Days";
+"main.projections" = "💎 Your Future Savings";
+"main.projection_6months" = "Half a year";
+"main.projection_12months" = "Full year";
+"main.next_milestone" = "🎖️ Next Achievement";
+"main.days_remaining" = "Just %d days to go!";
+
+/* Time Units */
+"time.day" = "day";
+"time.days" = "days";
+"time.week" = "week";
+"time.weeks" = "weeks";
+"time.month" = "month";
+"time.months" = "months";
+"time.year" = "year";
+"time.years" = "years";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.info" = "Information";
+"settings.start_date" = "Start Date";
+"settings.alcohol_cost" = "Alcohol expenses";
+"settings.related_cost" = "Related expenses";
+"settings.time_lost" = "Lost time";
+"settings.notifications" = "Notifications";
+"settings.notifications_enable" = "Enable notifications";
+"settings.notifications_frequency" = "Frequency";
+"settings.language" = "Language";
+"settings.data" = "Data";
+"settings.reset_data" = "Reset all data";
+"settings.about" = "About";
+"settings.version" = "Version";
+"settings.support" = "Support";
+"settings.reset_alert" = "Reset Data";
+"settings.reset_message" = "Are you sure? All data will be permanently deleted.";
+"settings.edit_data" = "Edit Data";
+
+/* Notification Frequencies */
+"notification.daily" = "Daily";
+"notification.weekly" = "Weekly";
+"notification.monthly" = "Monthly";
+
+/* Health */
+"health.title" = "💪 Health Recovery";
+"health.progress" = "🌟 Your Recovery Journey";
+"health.milestones_achieved" = "%d of %d milestones conquered";
+"health.completed" = "✅ Victories Unlocked";
+"health.next" = "🎯 Next Milestone";
+"health.upcoming" = "🔮 Coming Soon";
+"health.days_remaining" = "Just %d more days";
+
+/* Health Milestones */
+"health.milestone.day1.title" = "24 Hours";
+"health.milestone.day1.description" = "Blood alcohol level returns to zero. Detoxification begins.";
+"health.milestone.day3.title" = "3 Days";
+"health.milestone.day3.description" = "Sleep quality improves, energy levels increase.";
+"health.milestone.week1.title" = "1 Week";
+"health.milestone.week1.description" = "Liver begins to recover, skin condition improves.";
+"health.milestone.week2.title" = "2 Weeks";
+"health.milestone.week2.description" = "Significant improvement in digestion and immune system.";
+"health.milestone.month1.title" = "1 Month";
+"health.milestone.month1.description" = "Blood pressure normalizes, memory and concentration improve.";
+"health.milestone.month3.title" = "3 Months";
+"health.milestone.month3.description" = "Complete liver recovery (if no serious damage).";
+"health.milestone.month6.title" = "6 Months";
+"health.milestone.month6.description" = "Significant improvement in mental health and emotional stability.";
+"health.milestone.year1.title" = "1 Year";
+"health.milestone.year1.description" = "Reduced risk of cardiovascular disease, full normalization of body functions.";
+
+/* Mood */
+"mood.title" = "Mood";
+"mood.track_title" = "Track your mood";
+"mood.track_subtitle" = "Start recording how you feel each day";
+"mood.add_entry" = "Add Entry";
+"mood.recent_entries" = "Recent Entries";
+"mood.statistics" = "Statistics";
+"mood.average" = "Average mood:";
+"mood.total_entries" = "Total entries:";
+"mood.most_common" = "Most common mood:";
+"mood.add_title" = "Add Entry";
+"mood.how_feeling" = "Mood";
+"mood.notes" = "Notes (optional)";
+
+/* Mood Levels */
+"mood.excellent" = "Excellent";
+"mood.good" = "Good";
+"mood.okay" = "Okay";
+"mood.bad" = "Bad";
+"mood.terrible" = "Terrible";
+
+/* Mood Average Descriptions */
+"mood.avg.excellent" = "Excellent 😄";
+"mood.avg.good" = "Good 🙂";
+"mood.avg.okay" = "Okay 😐";
+"mood.avg.bad" = "Bad 😟";
+"mood.avg.difficult" = "Difficult 😢";
+
+/* Achievements */
+"achievements.title" = "🏆 Your Victories";
+"achievements.unlocked" = "🎉 Badges Earned";
+"achievements.unlocked_section" = "⭐ Hall of Fame";
+"achievements.locked_section" = "🔒 Coming Achievements";
+"achievements.days_remaining" = "Unlock in %d days";
+
+/* Achievement Titles and Descriptions */
+"achievement.day1.title" = "First Day";
+"achievement.day1.description" = "You took the first step to a new life!";
+"achievement.day3.title" = "Three Days";
+"achievement.day3.description" = "The hardest part is behind!";
+"achievement.week1.title" = "First Week";
+"achievement.week1.description" = "A whole week of sobriety!";
+"achievement.week2.title" = "Two Weeks";
+"achievement.week2.description" = "You're on the right path!";
+"achievement.month1.title" = "First Month";
+"achievement.month1.description" = "Incredible achievement!";
+"achievement.month2.title" = "Two Months";
+"achievement.month2.description" = "Your willpower is impressive!";
+"achievement.month3.title" = "Three Months";
+"achievement.month3.description" = "New habits have taken root!";
+"achievement.month6.title" = "Six Months";
+"achievement.month6.description" = "Half a year of sobriety!";
+"achievement.year1.title" = "One Year of Sobriety";
+"achievement.year1.description" = "Legendary achievement! A whole year!";
+"achievement.year2.title" = "Two Years";
+"achievement.year2.description" = "You're incredible!";
+
+/* Currency */
+"currency.eur" = "€";
+"currency.days" = "days";
+
+
+/* Notifications */
+"notification.title.daily" = "Great work!";
+"notification.body.daily" = "Check your progress in Sober";
+"notification.title.weekly" = "Weekly Report";
+"notification.body.weekly" = "You're %d weeks sober! Keep it up!";
+"notification.title.monthly" = "Monthly Report";
+"notification.body.monthly" = "Another month of sobriety. You've saved %.0f€!";
+"notification.milestone.title" = "New Achievement! 🎉";
+"notification.milestone.body" = "%@: %@";

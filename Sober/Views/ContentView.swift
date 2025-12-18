@@ -8,27 +8,27 @@ struct ContentView: View {
             TabView {
                 MainView()
                     .tabItem {
-                        Label("Главная", systemImage: "house.fill")
+                        Label(NSLocalizedString("tab.main", comment: ""), systemImage: "house.fill")
                     }
 
                 HealthView()
                     .tabItem {
-                        Label("Здоровье", systemImage: "heart.fill")
+                        Label(NSLocalizedString("tab.health", comment: ""), systemImage: "heart.fill")
                     }
 
                 MoodView()
                     .tabItem {
-                        Label("Настроение", systemImage: "face.smiling")
+                        Label(NSLocalizedString("tab.mood", comment: ""), systemImage: "face.smiling")
                     }
 
                 AchievementsView()
                     .tabItem {
-                        Label("Достижения", systemImage: "trophy.fill")
+                        Label(NSLocalizedString("tab.achievements", comment: ""), systemImage: "trophy.fill")
                     }
 
                 SettingsView()
                     .tabItem {
-                        Label("Настройки", systemImage: "gearshape.fill")
+                        Label(NSLocalizedString("tab.settings", comment: ""), systemImage: "gearshape.fill")
                     }
             }
         } else {

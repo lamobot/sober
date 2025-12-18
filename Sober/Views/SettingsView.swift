@@ -2,8 +2,11 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var viewModel: SobrietyViewModel
+    @StateObject private var localizationService = LocalizationService.shared
+    
     @State private var showResetAlert = false
     @State private var editMode = false
+    @State private var selectedLanguage = LocalizationService.shared.currentLanguage
 
     // Edit state
     @State private var editStartDate = Date()
@@ -20,45 +23,61 @@ struct SettingsView: View {
                 if !editMode {
                     // Display Mode
                     if let data = viewModel.sobrietyData {
-                        Section(header: Text("Информация")) {
+                        Section(header: Text(NSLocalizedString("settings.info", comment: ""))) {
                             HStack {
-                                Text("Дата начала")
+                                Text(NSLocalizedString("settings.start_date", comment: ""))
                                 Spacer()
                                 Text(data.sobrietyStartDate, style: .date)
                                     .foregroundColor(.secondary)
                             }
 
                             HStack {
-                                Text("Траты на алкоголь")
+                                Text(NSLocalizedString("settings.alcohol_cost", comment: ""))
                                 Spacer()
-                                Text("\(String(format: "%.0f", data.monthlyAlcoholCost)) €/мес")
+                                Text("\(String(format: "%.0f", data.monthlyAlcoholCost)) €/\(NSLocalizedString("time.month", comment: ""))")
                                     .foregroundColor(.secondary)
                             }
 
                             HStack {
-                                Text("Сопутствующие траты")
+                                Text(NSLocalizedString("settings.related_cost", comment: ""))
                                 Spacer()
-                                Text("\(String(format: "%.0f", data.monthlyRelatedCost)) €/мес")
+                                Text("\(String(format: "%.0f", data.monthlyRelatedCost)) €/\(NSLocalizedString("time.month", comment: ""))")
                                     .foregroundColor(.secondary)
                             }
 
                             HStack {
-                                Text("Потерянное время")
+                                Text(NSLocalizedString("settings.time_lost", comment: ""))
                                 Spacer()
-                                Text("\(String(format: "%.1f", data.monthlyTimeLostDays)) дней/мес")
+                                Text("\(String(format: "%.1f", data.monthlyTimeLostDays)) \(NSLocalizedString("currency.days", comment: ""))/\(NSLocalizedString("time.month", comment: ""))")
                                     .foregroundColor(.secondary)
                             }
                         }
 
                         Section {
-                            Button("Редактировать") {
+                            Button(NSLocalizedString("settings.edit_data", comment: "")) {
                                 startEditing(data)
                             }
                         }
                     }
 
-                    Section(header: Text("Уведомления")) {
-                        Toggle("Включить уведомления", isOn: $notificationsEnabled)
+                    // Language Picker
+                    Section(header: Text(NSLocalizedString("settings.language", comment: ""))) {
+                        Picker(NSLocalizedString("settings.language", comment: ""),
+                               selection: $selectedLanguage) {
+                            ForEach(AppLanguage.allCases, id: \.self) { language in
+                                Text(language.displayName).tag(language)
+                            }
+                        }
+                        .onChange(of: selectedLanguage) { newLanguage in
+                            LocalizationService.shared.currentLanguage = newLanguage
+                            var settings = viewModel.settings
+                            settings.selectedLanguage = newLanguage.rawValue
+                            viewModel.updateSettings(settings)
+                        }
+                    }
+
+                    Section(header: Text(NSLocalizedString("settings.notifications", comment: ""))) {
+                        Toggle(NSLocalizedString("settings.notifications_enable", comment: ""), isOn: $notificationsEnabled)
                             .onChange(of: notificationsEnabled) { newValue in
                                 var settings = viewModel.settings
                                 settings.notificationsEnabled = newValue
@@ -66,7 +85,7 @@ struct SettingsView: View {
                             }
 
                         if notificationsEnabled {
-                            Picker("Частота", selection: $notificationFrequency) {
+                            Picker(NSLocalizedString("settings.notifications_frequency", comment: ""), selection: $notificationFrequency) {
                                 ForEach(Settings.NotificationFrequency.allCases, id: \.self) { freq in
                                     Text(freq.localizedName).tag(freq)
                                 }
@@ -79,26 +98,26 @@ struct SettingsView: View {
                         }
                     }
 
-                    Section(header: Text("Данные")) {
-                        Button("Сбросить все данные", role: .destructive) {
+                    Section(header: Text(NSLocalizedString("settings.data", comment: ""))) {
+                        Button(NSLocalizedString("settings.reset_data", comment: ""), role: .destructive) {
                             showResetAlert = true
                         }
                     }
 
-                    Section(header: Text("О приложении")) {
+                    Section(header: Text(NSLocalizedString("settings.about", comment: ""))) {
                         HStack {
-                            Text("Версия")
+                            Text(NSLocalizedString("settings.version", comment: ""))
                             Spacer()
                             Text("1.0.0")
                                 .foregroundColor(.secondary)
                         }
 
-                        Link("Поддержка", destination: URL(string: "https://github.com/vtoropov/sober")!)
+                        Link(NSLocalizedString("settings.support", comment: ""), destination: URL(string: "https://github.com/lamobot/sober")!)
                     }
                 } else {
                     // Edit Mode
-                    Section(header: Text("Редактирование данных")) {
-                        DatePicker("Дата начала",
+                    Section(header: Text(NSLocalizedString("settings.edit_data", comment: ""))) {
+                        DatePicker(NSLocalizedString("settings.start_date", comment: ""),
                                   selection: $editStartDate,
                                   in: ...Date(),
                                   displayedComponents: .date)
@@ -106,48 +125,48 @@ struct SettingsView: View {
                         HStack {
                             Text("€")
                                 .foregroundColor(.secondary)
-                            TextField("Траты на алкоголь", text: $editAlcoholCost)
+                            TextField(NSLocalizedString("settings.alcohol_cost", comment: ""), text: $editAlcoholCost)
                                 .keyboardType(.decimalPad)
                         }
 
                         HStack {
                             Text("€")
                                 .foregroundColor(.secondary)
-                            TextField("Сопутствующие траты", text: $editRelatedCost)
+                            TextField(NSLocalizedString("settings.related_cost", comment: ""), text: $editRelatedCost)
                                 .keyboardType(.decimalPad)
                         }
 
                         HStack {
-                            TextField("Потерянное время", text: $editTimeLost)
+                            TextField(NSLocalizedString("settings.time_lost", comment: ""), text: $editTimeLost)
                                 .keyboardType(.decimalPad)
-                            Text("дней")
+                            Text(NSLocalizedString("currency.days", comment: ""))
                                 .foregroundColor(.secondary)
                         }
                     }
 
                     Section {
-                        Button("Сохранить") {
+                        Button(NSLocalizedString("save", comment: "")) {
                             saveEdits()
                         }
 
-                        Button("Отмена", role: .cancel) {
+                        Button(NSLocalizedString("cancel", comment: ""), role: .cancel) {
                             editMode = false
                         }
                     }
                 }
             }
-            .navigationTitle("Настройки")
+            .navigationTitle(NSLocalizedString("settings.title", comment: ""))
             .onAppear {
                 notificationsEnabled = viewModel.settings.notificationsEnabled
                 notificationFrequency = viewModel.settings.notificationFrequency
             }
-            .alert("Сброс данных", isPresented: $showResetAlert) {
-                Button("Отмена", role: .cancel) {}
-                Button("Сбросить", role: .destructive) {
+            .alert(NSLocalizedString("settings.reset_alert", comment: ""), isPresented: $showResetAlert) {
+                Button(NSLocalizedString("cancel", comment: ""), role: .cancel) {}
+                Button(NSLocalizedString("settings.reset_data", comment: ""), role: .destructive) {
                     viewModel.resetAllData()
                 }
             } message: {
-                Text("Вы уверены? Все данные будут удалены безвозвратно.")
+                Text(NSLocalizedString("settings.reset_message", comment: ""))
             }
         }
     }

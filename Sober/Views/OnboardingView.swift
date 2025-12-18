@@ -11,48 +11,48 @@ struct OnboardingView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Добро пожаловать в Sober")) {
-                    Text("Начните свой путь к здоровой жизни")
+                Section(header: Text(NSLocalizedString("onboarding.title", comment: ""))) {
+                    Text(NSLocalizedString("onboarding.subtitle", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
 
-                Section(header: Text("Дата начала")) {
-                    DatePicker("Дата отказа от алкоголя",
+                Section(header: Text(NSLocalizedString("onboarding.start_date", comment: ""))) {
+                    DatePicker(NSLocalizedString("onboarding.quit_date", comment: ""),
                               selection: $sobrietyStartDate,
                               in: ...Date(),
                               displayedComponents: .date)
                 }
 
-                Section(header: Text("Финансовые параметры")) {
+                Section(header: Text(NSLocalizedString("onboarding.financial_params", comment: ""))) {
                     HStack {
                         Text("€")
                             .foregroundColor(.secondary)
-                        TextField("Траты на алкоголь в месяц", text: $monthlyAlcoholCost)
+                        TextField(NSLocalizedString("onboarding.alcohol_cost", comment: ""), text: $monthlyAlcoholCost)
                             .keyboardType(.decimalPad)
                     }
 
                     HStack {
                         Text("€")
                             .foregroundColor(.secondary)
-                        TextField("Сопутствующие траты в месяц", text: $monthlyRelatedCost)
+                        TextField(NSLocalizedString("onboarding.related_cost", comment: ""), text: $monthlyRelatedCost)
                             .keyboardType(.decimalPad)
                     }
 
-                    Text("Например: такси, еда, клубы и т.д.")
+                    Text(NSLocalizedString("onboarding.related_hint", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
 
-                Section(header: Text("Потерянное время")) {
+                Section(header: Text(NSLocalizedString("onboarding.time_lost", comment: ""))) {
                     HStack {
-                        TextField("Дни в месяц", text: $monthlyTimeLostDays)
+                        TextField(NSLocalizedString("onboarding.time_lost_placeholder", comment: ""), text: $monthlyTimeLostDays)
                             .keyboardType(.decimalPad)
-                        Text("дней")
+                        Text(NSLocalizedString("currency.days", comment: ""))
                             .foregroundColor(.secondary)
                     }
 
-                    Text("Похмелье, восстановление и т.д.")
+                    Text(NSLocalizedString("onboarding.time_lost_hint", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -61,18 +61,18 @@ struct OnboardingView: View {
                     Button(action: saveAndStart) {
                         HStack {
                             Spacer()
-                            Text("Начать")
+                            Text(NSLocalizedString("onboarding.start", comment: ""))
                                 .fontWeight(.semibold)
                             Spacer()
                         }
                     }
                 }
             }
-            .navigationTitle("Настройка")
-            .alert("Ошибка", isPresented: $showError) {
-                Button("OK", role: .cancel) {}
+            .navigationTitle(NSLocalizedString("settings.title", comment: ""))
+            .alert(NSLocalizedString("onboarding.error", comment: ""), isPresented: $showError) {
+                Button(NSLocalizedString("ok", comment: ""), role: .cancel) {}
             } message: {
-                Text("Пожалуйста, заполните все поля корректно")
+                Text(NSLocalizedString("onboarding.error_message", comment: ""))
             }
         }
     }

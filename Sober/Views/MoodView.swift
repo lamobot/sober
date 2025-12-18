@@ -13,17 +13,17 @@ struct MoodView: View {
                             .font(.system(size: 60))
                             .foregroundColor(.gray)
 
-                        Text("Отслеживайте своё настроение")
+                        Text(NSLocalizedString("mood.track_title", comment: ""))
                             .font(.headline)
 
-                        Text("Начните записывать как вы себя чувствуете каждый день")
+                        Text(NSLocalizedString("mood.track_subtitle", comment: ""))
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
 
                         Button(action: { showAddMood = true }) {
-                            Label("Добавить запись", systemImage: "plus.circle.fill")
+                            Label(NSLocalizedString("mood.add_entry", comment: ""), systemImage: "plus.circle.fill")
                                 .font(.headline)
                         }
                         .buttonStyle(.borderedProminent)
@@ -31,7 +31,7 @@ struct MoodView: View {
                     .frame(maxHeight: .infinity)
                 } else {
                     List {
-                        Section(header: Text("Последние записи")) {
+                        Section(header: Text(NSLocalizedString("mood.recent_entries", comment: ""))) {
                             ForEach(viewModel.moodEntries) { entry in
                                 MoodEntryRow(entry: entry)
                             }
@@ -40,14 +40,14 @@ struct MoodView: View {
 
                         // Mood Statistics
                         if viewModel.moodEntries.count >= 7 {
-                            Section(header: Text("Статистика")) {
+                            Section(header: Text(NSLocalizedString("mood.statistics", comment: ""))) {
                                 MoodStatisticsView(entries: viewModel.moodEntries)
                             }
                         }
                     }
                 }
             }
-            .navigationTitle("Настроение")
+            .navigationTitle(NSLocalizedString("mood.title", comment: ""))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showAddMood = true }) {
@@ -109,8 +109,8 @@ struct AddMoodView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Как вы себя чувствуете?")) {
-                    Picker("Настроение", selection: $selectedMood) {
+                Section(header: Text(NSLocalizedString("mood.how_feeling", comment: ""))) {
+                    Picker(NSLocalizedString("mood.how_feeling", comment: ""), selection: $selectedMood) {
                         ForEach(MoodEntry.Mood.allCases, id: \.self) { mood in
                             HStack {
                                 Text(mood.emoji)
@@ -122,24 +122,24 @@ struct AddMoodView: View {
                     .pickerStyle(.inline)
                 }
 
-                Section(header: Text("Заметки (опционально)")) {
+                Section(header: Text(NSLocalizedString("mood.notes", comment: ""))) {
                     TextEditor(text: $notes)
                         .frame(height: 100)
                 }
 
                 Section {
-                    Button("Сохранить") {
+                    Button(NSLocalizedString("save", comment: "")) {
                         let entry = MoodEntry(mood: selectedMood, notes: notes.isEmpty ? nil : notes)
                         viewModel.addMoodEntry(entry)
                         dismiss()
                     }
                 }
             }
-            .navigationTitle("Добавить запись")
+            .navigationTitle(NSLocalizedString("mood.add_title", comment: ""))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Отмена") {
+                    Button(NSLocalizedString("cancel", comment: "")) {
                         dismiss()
                     }
                 }
@@ -160,37 +160,29 @@ struct MoodStatisticsView: View {
     }
 
     private var averageMood: String {
-        let moodValues: [MoodEntry.Mood: Double] = [
-            .excellent: 5.0,
-            .good: 4.0,
-            .okay: 3.0,
-            .bad: 2.0,
-            .terrible: 1.0
-        ]
-
         let total = entries.reduce(0.0) { sum, entry in
-            sum + (moodValues[entry.mood] ?? 3.0)
+            sum + entry.mood.numericValue
         }
 
         let average = total / Double(entries.count)
 
         if average >= 4.5 {
-            return "Отлично 😄"
+            return NSLocalizedString("mood.avg.excellent", comment: "")
         } else if average >= 3.5 {
-            return "Хорошо 🙂"
+            return NSLocalizedString("mood.avg.good", comment: "")
         } else if average >= 2.5 {
-            return "Нормально 😐"
+            return NSLocalizedString("mood.avg.okay", comment: "")
         } else if average >= 1.5 {
-            return "Плохо 😟"
+            return NSLocalizedString("mood.avg.bad", comment: "")
         } else {
-            return "Тяжело 😢"
+            return NSLocalizedString("mood.avg.difficult", comment: "")
         }
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Среднее настроение:")
+                Text(NSLocalizedString("mood.average", comment: ""))
                     .foregroundColor(.secondary)
                 Spacer()
                 Text(averageMood)
@@ -198,7 +190,7 @@ struct MoodStatisticsView: View {
             }
 
             HStack {
-                Text("Всего записей:")
+                Text(NSLocalizedString("mood.total_entries", comment: ""))
                     .foregroundColor(.secondary)
                 Spacer()
                 Text("\(entries.count)")
@@ -207,7 +199,7 @@ struct MoodStatisticsView: View {
 
             if let mostCommon = moodCounts.max(by: { $0.value < $1.value }) {
                 HStack {
-                    Text("Частое настроение:")
+                    Text(NSLocalizedString("mood.most_common", comment: ""))
                         .foregroundColor(.secondary)
                     Spacer()
                     Text("\(mostCommon.key.emoji) \(mostCommon.key.localizedName)")

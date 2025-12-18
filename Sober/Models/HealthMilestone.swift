@@ -1,71 +1,84 @@
 import Foundation
 
+/// Health milestone representing recovery stages
 struct HealthMilestone: Identifiable, Codable {
     let id: UUID
     let daysRequired: Int
-    let title: String
-    let description: String
+    let titleKey: String
+    let descriptionKey: String
     let icon: String
 
+    /// Localized title
+    var title: String {
+        NSLocalizedString(titleKey, comment: "")
+    }
+
+    /// Localized description
+    var description: String {
+        NSLocalizedString(descriptionKey, comment: "")
+    }
+
+    /// Predefined health milestones based on medical research
     static let milestones: [HealthMilestone] = [
         HealthMilestone(
             id: UUID(),
             daysRequired: 1,
-            title: "24 часа",
-            description: "Уровень алкоголя в крови возвращается к нулю. Начинается детоксикация.",
+            titleKey: "health.milestone.day1.title",
+            descriptionKey: "health.milestone.day1.description",
             icon: "heart.fill"
         ),
         HealthMilestone(
             id: UUID(),
             daysRequired: 3,
-            title: "3 дня",
-            description: "Улучшается качество сна, повышается уровень энергии.",
+            titleKey: "health.milestone.day3.title",
+            descriptionKey: "health.milestone.day3.description",
             icon: "moon.stars.fill"
         ),
         HealthMilestone(
             id: UUID(),
             daysRequired: 7,
-            title: "1 неделя",
-            description: "Печень начинает восстанавливаться, улучшается состояние кожи.",
+            titleKey: "health.milestone.week1.title",
+            descriptionKey: "health.milestone.week1.description",
             icon: "leaf.fill"
         ),
         HealthMilestone(
             id: UUID(),
             daysRequired: 14,
-            title: "2 недели",
-            description: "Значительное улучшение пищеварения и иммунной системы.",
+            titleKey: "health.milestone.week2.title",
+            descriptionKey: "health.milestone.week2.description",
             icon: "shield.fill"
         ),
         HealthMilestone(
             id: UUID(),
             daysRequired: 30,
-            title: "1 месяц",
-            description: "Нормализуется кровяное давление, улучшается память и концентрация.",
+            titleKey: "health.milestone.month1.title",
+            descriptionKey: "health.milestone.month1.description",
             icon: "brain.head.profile"
         ),
         HealthMilestone(
             id: UUID(),
             daysRequired: 90,
-            title: "3 месяца",
-            description: "Полное восстановление печени (если не было серьезных повреждений).",
+            titleKey: "health.milestone.month3.title",
+            descriptionKey: "health.milestone.month3.description",
             icon: "heart.circle.fill"
         ),
         HealthMilestone(
             id: UUID(),
             daysRequired: 180,
-            title: "6 месяцев",
-            description: "Значительное улучшение психического здоровья и эмоциональной стабильности.",
+            titleKey: "health.milestone.month6.title",
+            descriptionKey: "health.milestone.month6.description",
             icon: "star.fill"
         ),
         HealthMilestone(
             id: UUID(),
             daysRequired: 365,
-            title: "1 год",
-            description: "Снижение риска сердечно-сосудистых заболеваний, полная нормализация функций организма.",
+            titleKey: "health.milestone.year1.title",
+            descriptionKey: "health.milestone.year1.description",
             icon: "crown.fill"
         )
     ]
 
+    /// Check if milestone is achieved based on days sober
     func isAchieved(daysSober: Int) -> Bool {
         return daysSober >= daysRequired
     }
