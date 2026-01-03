@@ -33,7 +33,9 @@
 "main.sober_since" = "🎯 Your journey started";
 "main.money_saved" = "Money Back in Your Pocket";
 "main.time_saved" = "Life Hours Reclaimed";
-"main.days_streak" = "Streak Days";
+"main.also_years" = "That's %d years and %d months";
+"main.also_months" = "That's %d months and %d weeks";
+"main.also_weeks" = "That's %d weeks";
 "main.projections" = "💎 Your Future Savings";
 "main.projection_6months" = "Half a year";
 "main.projection_12months" = "Full year";

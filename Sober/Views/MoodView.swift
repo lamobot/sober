@@ -71,31 +71,72 @@ struct MoodView: View {
 
 struct MoodEntryRow: View {
     let entry: MoodEntry
+    @State private var isExpanded = false
 
     var body: some View {
-        HStack {
-            Text(entry.mood.emoji)
-                .font(.title)
+        VStack(alignment: .leading, spacing: 8) {
+            // Main row - always visible
+            HStack {
+                Text(entry.mood.emoji)
+                    .font(.title)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(entry.mood.localizedName)
-                    .font(.headline)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(entry.mood.localizedName)
+                        .font(.headline)
 
-                Text(entry.date, style: .date)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    HStack {
+                        Text(entry.date, style: .date)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
 
+                        if let notes = entry.notes, !notes.isEmpty {
+                            Text("•")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(NSLocalizedString("mood.notes", comment: ""))
+                                .font(.caption)
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
+
+                Spacer()
+
+                // Expand/collapse indicator
                 if let notes = entry.notes, !notes.isEmpty {
-                    Text(notes)
-                        .font(.subheadline)
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .font(.caption)
                         .foregroundColor(.secondary)
-                        .lineLimit(2)
+                        .animation(.easeInOut, value: isExpanded)
                 }
             }
 
-            Spacer()
+            // Expandable notes section
+            if let notes = entry.notes, !notes.isEmpty, isExpanded {
+                VStack(alignment: .leading, spacing: 8) {
+                    Divider()
+
+                    Text(notes)
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .transition(.asymmetric(
+                            insertion: .opacity.combined(with: .move(edge: .top)),
+                            removal: .opacity
+                        ))
+                }
+                .padding(.leading, 48) // Align with text above emoji
+            }
         }
         .padding(.vertical, 4)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if entry.notes != nil && !entry.notes!.isEmpty {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                    isExpanded.toggle()
+                }
+            }
+        }
     }
 }
 

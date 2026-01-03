@@ -8,31 +8,57 @@ struct MainView: View {
             ScrollView {
                 VStack(spacing: AppSpacing.xl) {
                     if let data = viewModel.sobrietyData {
-                        // Hero Section with Gradient
-                        VStack(spacing: AppSpacing.sm) {
+                        // Hero Section - Main Counter
+                        VStack(spacing: AppSpacing.md) {
                             Text(NSLocalizedString("main.sober_since", comment: ""))
                                 .font(AppTypography.labelMedium)
                                 .foregroundColor(AppColor.textSecondary)
 
                             Text(data.sobrietyStartDate, style: .date)
                                 .font(AppTypography.labelLarge)
-
-                            // Animated Counter
-                            VStack(spacing: AppSpacing.xxs) {
-                                AnimatedCounter(
-                                    value: data.displayTimeValue,
-                                    font: AppTypography.displayLarge
-                                )
                                 .foregroundColor(AppColor.textPrimary)
 
-                                Text(data.displayTimeUnit())
+                            Spacer().frame(height: AppSpacing.sm)
+
+                            // Main Counter - Days Sober
+                            VStack(spacing: AppSpacing.xs) {
+                                AnimatedCounter(
+                                    value: data.daysSober,
+                                    font: AppTypography.displayLarge
+                                )
+                                .foregroundColor(AppColor.primary)
+
+                                Text(data.daysSober == 1 ?
+                                     NSLocalizedString("time.day", comment: "") :
+                                     NSLocalizedString("time.days", comment: ""))
                                     .font(AppTypography.headlineMedium)
                                     .foregroundColor(AppColor.textSecondary)
                             }
-                            .padding()
+
+                            Spacer().frame(height: AppSpacing.xs)
+
+                            // Alternative time representation
+                            if data.yearsSober >= 1 {
+                                Text(String(format: NSLocalizedString("main.also_years", comment: ""),
+                                          data.yearsSober,
+                                          data.monthsSober % 12))
+                                    .font(AppTypography.labelMedium)
+                                    .foregroundColor(AppColor.textTertiary)
+                            } else if data.monthsSober >= 1 {
+                                Text(String(format: NSLocalizedString("main.also_months", comment: ""),
+                                          data.monthsSober,
+                                          data.weeksSober % 4))
+                                    .font(AppTypography.labelMedium)
+                                    .foregroundColor(AppColor.textTertiary)
+                            } else if data.weeksSober >= 1 {
+                                Text(String(format: NSLocalizedString("main.also_weeks", comment: ""),
+                                          data.weeksSober))
+                                    .font(AppTypography.labelMedium)
+                                    .foregroundColor(AppColor.textTertiary)
+                            }
                         }
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(AppSpacing.lg)
                         .background(
                             LinearGradient(
                                 colors: [
@@ -44,9 +70,10 @@ struct MainView: View {
                             )
                         )
                         .cornerRadius(AppDesignTokens.CornerRadius.large)
+                        .shadowMedium()
                         .padding(.horizontal)
 
-                        // Stats Grid with Animations
+                        // Stats Grid - Money & Time
                         VStack(spacing: AppSpacing.md) {
                             StatCard(
                                 title: NSLocalizedString("main.money_saved", comment: ""),
@@ -63,14 +90,6 @@ struct MainView: View {
                                 color: AppColor.time
                             )
                             .slideIn(from: .leading, delay: 0.2)
-
-                            StatCard(
-                                title: NSLocalizedString("main.days_streak", comment: ""),
-                                value: "\(data.daysSober)",
-                                icon: "calendar",
-                                color: AppColor.days
-                            )
-                            .slideIn(from: .leading, delay: 0.3)
                         }
                         .padding(.horizontal)
 
@@ -94,7 +113,7 @@ struct MainView: View {
                             .padding(.horizontal)
                         }
                         .padding(.vertical)
-                        .slideIn(from: .bottom, delay: 0.4)
+                        .slideIn(from: .bottom, delay: 0.3)
 
                         // Next Milestone with Pulse
                         if let nextMilestone = viewModel.getNextMilestone() {
@@ -129,7 +148,7 @@ struct MainView: View {
                                 )
                             }
                             .padding(.horizontal)
-                            .slideIn(from: .bottom, delay: 0.5)
+                            .slideIn(from: .bottom, delay: 0.4)
                         }
                     }
                 }
